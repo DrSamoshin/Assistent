@@ -1,0 +1,20 @@
+{% include "header.html" %}
+
+<!-- Main Content -->
+<div class="container">
+    <div class="col-sm-10 mx-auto">
+        <form method="POST" action="{{ url_for('register_user') }}" novalidate class="form-contact">
+            {{ form.csrf_token }}
+            <p>{{ form.first_name.label }}{{ form.first_name(size=20) }}
+            {% for error in form.first_name.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+            <p>{{ form.last_name.label }}{{ form.last_name(size=20) }}
+            <p>{{ form.email.label }}{{ form.email(size=20) }}
+            <p>{{ form.password.label }}{{ form.password(size=20) }}
+            <p>{{ form.submit(size=20) }}
+        </form>
+    </div>
+</div>
+
+{% include "footer.html" %}
