@@ -1,64 +1,40 @@
 import config
 from flask import Flask, render_template, url_for, redirect, flash
 # from flask_login import LoginManager, UserMixin
-from forms import CreateUserForm, CreateThingForm
-
+import function
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config.from_object(config)
 
-
+db = SQLAlchemy(app)
 
 # login_manager = LoginManager()
 # login_manager.init_app(app)
 
-
 @app.route('/')
 def home():
-    return render_template('index.html', title='start')
+    return function.show_all()
 
 @app.route('/register_user', methods=['GET', 'POST'])
 def register_user():
-    create_user_form = CreateUserForm()
-    if create_user_form.validate_on_submit():
-        try:
-            new_user = User(
-                first_name=create_user_form.first_name.data,
-                last_name=create_user_form.last_name.data,
-                email=create_user_form.email.data,
-                password=create_user_form.password.data,
-            )
-            db.session.add(new_user)
-            db.session.commit()
-            print('Good')
-        except:
-            print('Error')
-        return redirect(url_for('home'))
-    else:
-        return render_template('register_user.html', form=create_user_form)
+    return function.register_user()
 
 @app.route('/register_thing', methods=['GET', 'POST'])
 def register_thing():
-    create_thing_form = CreateThingForm()
-    if create_thing_form.validate_on_submit():
-        print(create_thing_form.started.data)
-        try:
-            new_thing = Thing(
-                category=create_thing_form.category.data,
-                title=create_thing_form.title.data,
-                description=create_thing_form.description.data,
-                dimension=create_thing_form.dimension.data,
-                amount=create_thing_form.amount.data,
-                started=create_thing_form.started.data
-            )
-            db.session.add(new_thing)
-            db.session.commit()
-            print('Good')
-        except:
-            print('Error')
-        return redirect(url_for('home'))
-    else:
-        return render_template('register_thing.html', form=create_thing_form)
+    return function.register_thing()
+
+@app.route('/delete_thing/<int:thing_id>', methods=['GET'])
+def delete_thing(thing_id):
+    return function.delete_thing(thing_id)
+
+@app.route('/register_category', methods=['GET', 'POST'])
+def register_category():
+    return function.register_category()
+
+@app.route('/delete_category/<int:category_id>', methods=['GET'])
+def delete_category(category_id):
+    return function.delete_category(category_id)
 
 @app.route('/about')
 def about():

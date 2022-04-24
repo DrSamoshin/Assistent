@@ -20,3 +20,6 @@ class CreateThingForm(FlaskForm):
     started = BooleanField('Started:', default=False)
     submit = SubmitField('Submit form')
 
+class CreateCategoryForm(FlaskForm):
+    title_category = StringField('Title:', validators=[DataRequired()])
+    submit = SubmitField('Submit form')

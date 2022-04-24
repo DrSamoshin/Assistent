@@ -1,0 +1,22 @@
+{% include "header.html" %}
+
+<div class="container">
+    <div class="col-sm-10 mx-auto">
+        <form method="POST" action="{{ url_for('register_category') }}" novalidate class="form-contact">
+            {{ form.csrf_token }}
+            <p>{{ form.title_category.label }}{{ form.title_category }}
+            <p>{{ form.submit(size=20) }}
+        </form>
+    </div>
+</div>
+<hr>
+<div class="container">
+    {% for category in categories %}
+        <div class="post-preview">
+            <p>{{ category.title_category }} <a href="{{url_for('delete_category', category_id=category.id) }}">✘</a> </p>
+        </div>
+    <hr>
+    {% endfor %}
+</div>
+
+{% include "footer.html" %}

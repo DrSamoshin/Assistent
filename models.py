@@ -1,8 +1,5 @@
-from main import app
-from flask_sqlalchemy import SQLAlchemy
+from main import db
 
-
-db = SQLAlchemy(app)
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -24,3 +21,9 @@ class Thing(db.Model):
     dimension = db.Column(db.String(20), nullable=True)
     amount = db.Column(db.Integer, nullable=True)
     started = db.Column(db.Boolean, nullable=True)
+
+class Category(db.Model):
+    __tablename__ = 'categories'
+    id = db.Column(db.Integer, primary_key=True)
+    title_category = db.Column(db.String(20))
+
