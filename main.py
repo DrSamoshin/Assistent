@@ -1,7 +1,6 @@
+from flask import Flask
 import config
-from flask import Flask, render_template, url_for, redirect, flash
 # from flask_login import LoginManager, UserMixin
-import function
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -11,6 +10,8 @@ db = SQLAlchemy(app)
 
 # login_manager = LoginManager()
 # login_manager.init_app(app)
+
+import function
 
 @app.route('/')
 def home():
@@ -36,9 +37,6 @@ def register_category():
 def delete_category(category_id):
     return function.delete_category(category_id)
 
-@app.route('/about')
-def about():
-    return render_template('about.html')
 
 # with app.test_request_context(): # TEST REQUEST FROM SERVER
 #     print(url_for('home'))

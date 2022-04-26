@@ -10,7 +10,7 @@ def register_user():
             new_user = User(
                 first_name=create_user_form.first_name.data,
                 last_name=create_user_form.last_name.data,
-                email=create_user_form.email.data,
+                email=create_user_form.email.data.lower(),
                 password=create_user_form.password.data,
             )
             db.session.add(new_user)
@@ -23,14 +23,16 @@ def register_user():
         return render_template('register_user.html', form=create_user_form)
 
 def register_thing():
+    categories = Category.query.all()
+    list_categories = [(item.id, item.title_category) for item in categories]
     create_thing_form = CreateThingForm()
+    create_thing_form.category_id.choices = list_categories
     if create_thing_form.validate_on_submit():
-        print(create_thing_form.started.data)
         try:
             new_thing = Thing(
-                category=create_thing_form.category.data,
-                title=create_thing_form.title.data,
-                description=create_thing_form.description.data,
+                category_id=create_thing_form.category_id.data,
+                title=create_thing_form.title.data.lower(),
+                description=create_thing_form.description.data.lower(),
                 dimension=create_thing_form.dimension.data,
                 amount=create_thing_form.amount.data,
                 started=create_thing_form.started.data
@@ -56,7 +58,7 @@ def register_category():
     if create_category_form.validate_on_submit():
         try:
             new_category = Category(
-                title_category=create_category_form.title_category.data
+                title_category=create_category_form.title_category.data.lower()
             )
             db.session.add(new_category)
             db.session.commit()
@@ -72,7 +74,6 @@ def delete_category(category_id):
     db.session.delete(category_to_delete)
     db.session.commit()
     return redirect(url_for('register_category'))
-
 
 def show_all():
     things = Thing.query.all()
