@@ -1,6 +1,7 @@
 {% include "header.html" %}
 
 <!-- Main Content -->
+
 <div class="container">
     <div class="col-sm-10 mx-auto">
         <form method="POST" action="{{ url_for('register_user') }}" novalidate class="form-contact">
@@ -11,6 +12,7 @@
             {% endfor %}
             <p>{{ form.last_name.label }}{{ form.last_name(size=20) }}
             <p>{{ form.email.label }}{{ form.email(size=20) }}
+            {% for message in get_flashed_messages() %}{{message}}{% endfor %}
             <p>{{ form.password.label }}{{ form.password(size=20) }}
             <p>{{ form.submit(size=20) }}
         </form>

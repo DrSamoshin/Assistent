@@ -10,6 +10,11 @@ class CreateUserForm(FlaskForm):
     password = PasswordField('Password:', validators=[DataRequired()])
     submit = SubmitField('Submit form')
 
+class LogInForm(FlaskForm):
+    email = StringField('Email:', validators=[Email()])
+    password = PasswordField('Password:', validators=[DataRequired()])
+    submit = SubmitField('Submit form')
+
 class CreateThingForm(FlaskForm):
     category_id = SelectField('Category:', coerce=int)
     title = StringField('Title:', validators=[DataRequired()])

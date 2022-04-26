@@ -21,6 +21,18 @@ def home():
 def register_user():
     return function.register_user()
 
+@app.route('/delete_user/<int:user_id>', methods=['GET'])
+def delete_user(user_id):
+    return function.delete_user(user_id)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    return function.login()
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    return function.logout()
+
 @app.route('/register_thing', methods=['GET', 'POST'])
 def register_thing():
     return function.register_thing()

@@ -12,13 +12,13 @@ class User(db.Model):
 
     things = relationship('Thing', backref='users')
 
-    def __repr__(self):
-        return f'<user {self.id}>'
+    # def __repr__(self):
+    #     return f'<user {self.id}>'
 
 class Category(db.Model):
     __tablename__ = 'categories'
     id = db.Column(db.Integer, primary_key=True)
-    title_category = db.Column(db.String(20))
+    title_category = db.Column(db.String(20), unique=True)
 
     things = relationship('Thing', backref='categories')
 
