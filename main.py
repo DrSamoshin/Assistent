@@ -1,17 +1,21 @@
 from flask import Flask
 import config
-# from flask_login import LoginManager, UserMixin
+from flask_login import LoginManager, UserMixin, login_required
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config.from_object(config)
 
 db = SQLAlchemy(app)
-
-# login_manager = LoginManager()
-# login_manager.init_app(app)
+login_manager = LoginManager(app)
 
 import function
+
+from models import User
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
 
 @app.route('/')
 def home():
@@ -49,6 +53,9 @@ def register_category():
 def delete_category(category_id):
     return function.delete_category(category_id)
 
+@app.route('/about')
+def about():
+    return function.about()
 
 # with app.test_request_context(): # TEST REQUEST FROM SERVER
 #     print(url_for('home'))

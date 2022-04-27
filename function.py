@@ -1,8 +1,9 @@
 from flask import url_for, render_template, redirect, flash
 from forms import CreateUserForm, CreateThingForm, CreateCategoryForm, LogInForm
-from main import db
+from main import db, login_manager
 from models import User, Thing, Category
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import login_user, login_required, current_user, logout_user
 
 def register_user():
     create_user_form = CreateUserForm()
@@ -21,7 +22,7 @@ def register_user():
                 )
                 db.session.add(new_user)
                 db.session.commit()
-
+                login_user(new_user, remember=True)
             except:
                 print('Error')
             return redirect(url_for('home'))
@@ -40,20 +41,18 @@ def login():
         email = login_form.email.data.lower()
         password = login_form.password.data
         user = User.query.filter_by(email=email).first()
-        if not user:
-            flash("this email don't used")
-            return redirect(url_for('login'))
-        elif not check_password_hash(user.password, password):
-            flash("this password don't used")
+        if not user or not check_password_hash(user.password, password):
+            flash("Email or password are incorrect")
             return redirect(url_for('login'))
         else:
-            flash("You are the best")
-            return redirect(url_for('login'))
+            flash(f'Hello {user.first_name}')
+            login_user(user, remember=True)
+            redirect(url_for('home'))
     return render_template('login.html', form=login_form)
 
 def logout():
+    logout_user()
     return redirect(url_for('home'))
-
 
 def register_thing():
     categories = Category.query.all()
@@ -112,3 +111,10 @@ def show_all():
     things = Thing.query.all()
     users = User.query.all()
     return render_template('index.html', title='start', things=things, users=users)
+
+@login_required
+def about():
+    things = Thing.query.all()
+    x = current_user
+    print(x)
+    return render_template('index.html', title=x.first_name, things=things)
