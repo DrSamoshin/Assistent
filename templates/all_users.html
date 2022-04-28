@@ -1,0 +1,17 @@
+{% include "header.html" %}
+
+<!-- Page Header -->
+
+<div class="container">
+    <h3>Users</h3>
+    {% for user in users %}
+        <div class="post-preview">
+            <p>{{ user.first_name }} {{ user.last_name }} {% if user.id !=1 %}<a href="{{url_for('delete_user', user_id=user.id) }}">✘</a> {% endif %} </p>
+        </div>
+    <hr>
+    {% endfor %}
+</div>
+<hr>
+
+
+{% include "footer.html" %}

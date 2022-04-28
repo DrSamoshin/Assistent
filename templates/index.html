@@ -6,22 +6,16 @@
     <h3>Things</h3>
     {% for thing in things %}
         <div class="post-preview">
-            <p>{{ thing.title }} {{ thing.amount }} <a href="{{url_for('delete_thing', thing_id=thing.id) }}">✘</a> </p>
+            {% for cat in category %}
+                {% if cat.id == thing.category_id %}
+                    {{ cat.title_category }}
+                {% endif %}
+            {% endfor %}
+            <a href="{{url_for('show_thing', thing_id=thing.id) }}"><h5>{{ thing.title }} {{ thing.amount }}</h5></a>
+            <a href="{{url_for('delete_thing', thing_id=thing.id) }}">✘</a>
         </div>
     <hr>
     {% endfor %}
 </div>
 <hr>
-<div class="container">
-    <h3>Users</h3>
-    {% for user in users %}
-        <div class="post-preview">
-            <p>{{ user.first_name }} {{ user.last_name }} <a href="{{url_for('delete_user', user_id=user.id) }}">✘</a></p>
-        </div>
-    <hr>
-    {% endfor %}
-</div>
-
-
-
 {% include "footer.html" %}

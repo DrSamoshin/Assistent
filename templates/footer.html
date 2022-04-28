@@ -1,12 +1,17 @@
   <!-- Footer -->
   <footer>
     <div class="container">
-      <p><a href="{{ url_for('register_user') }}">Регистрация нового пользователя</a></p>
+      {% if not current_user.is_anonymous %}
+      <p><a href="{{ url_for('home') }}">Главная</a></p>
       <p><a href="{{ url_for('register_thing') }}">Создание новой вещи</a></p>
-      <p><a href="{{ url_for('register_category') }}">Создание новой категории</a></p>
-      <p><a href="{{ url_for('login') }}">Войти</a></p>
       <p><a href="{{ url_for('logout') }}">Выйти</a></p>
-      <p><a href="{{ url_for('about') }}">Секрет</a></p>
+      {% endif %}
+      <hr>
+      {% if current_user.id == 1 %}
+      <p><a href="{{ url_for('all_users') }}">Пользователи</a></p>
+      <p><a href="{{ url_for('register_user') }}">Регистрация нового пользователя</a></p>
+      <p><a href="{{ url_for('register_category') }}">Создание новой категории</a></p>
+      {% endif %}
     </div>
     <p class="container">Copyright &copy; D&S 2022</p>
   </footer>

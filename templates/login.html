@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="col-sm-10 mx-auto">
-        <form method="POST" action="{{ url_for('login') }}" novalidate class="form-contact">
+        <form method="POST" action="" novalidate class="form-contact">
             {{ form.csrf_token }}
             <p>{% for message in get_flashed_messages() %}{{message}}{% endfor %}
             <p>{{ form.email.label }}{{ form.email(size=20) }}

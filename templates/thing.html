@@ -1,0 +1,39 @@
+{% include "header.html" %}
+
+<!-- Page Header -->
+
+<div class="container">
+    <h3>Thing</h3>
+        <p>{{ thing.title }}</p>
+        <p>{{ thing.description }}</p>
+        {% if thing.one_unit != 1.0 and thing.dimension != 'unit'%}
+        <p>{{ thing.one_unit }} {{ thing.dimension }}</p>
+        {% endif %}
+        <p>amount: {{ thing.amount }}</p>
+        <p>{{ category.title_category }}</p>
+</div>
+<hr>
+<div class="container">
+    <div class="col-sm-10 mx-auto">
+        <form method="POST" action="{{url_for('add_thing', thing_id=thing.id) }}" novalidate class="form-contact">
+            {{ form_add.csrf_token }}
+            <p>{{ form_add.price.label }}{{ form_add.price }}
+            <p>{{ form_add.amount.label }}{{ form_add.amount }}
+            <p>{{ form_add.submit(size=20) }}
+        </form>
+    </div>
+</div>
+<hr>
+<div class="container">
+    <div class="col-sm-10 mx-auto">
+        <form method="POST" action="{{url_for('remove_thing', thing_id=thing.id) }}" novalidate class="form-contact">
+            {{ form_add.csrf_token }}
+            <p>{{ form_remove.remove.label }}{{ form_remove.remove }}
+            <p>{{ form_remove.submit(size=20) }}
+        </form>
+    </div>
+</div>
+<hr>
+
+
+{% include "footer.html" %}
